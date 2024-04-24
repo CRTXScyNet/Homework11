@@ -10,18 +10,20 @@ public class Main {
 
         //Task two
         int clientOS = 0;
-        int currentYear = LocalDate.now().getYear();
-        checkOSVersion(clientOS, currentYear);
+        int clientDeviceYear = 2024;
+        checkOSVersion(clientOS, clientDeviceYear);
 
         // Task three
         int deliveryDistance = 150;
         int daysToDeliver = calculateDeliveryDaysCount(deliveryDistance);
     }
 
+
+    // Проверка, является ли год високосным
     public static void checkIfLeapYear(int year) {
         String leapYear = " год является високосным";
         String notLeapYear = " год не является високосным";
-        if (year <= 1584) {
+        if (year <= 1582) {
             System.out.println(year + notLeapYear);
         } else if (year % 400 == 0) {
             System.out.println(year + leapYear);
@@ -37,16 +39,18 @@ public class Main {
 
     }
 
-    public static void checkOSVersion(int clientOS, int currentYear) {
-        int yearOfManufacture = 2024;
+
+    // Определяем для какой операционки ставить приложение и какую версию
+    public static void checkOSVersion(int clientOS, int clientDeviceYear) {
+        int currentYear = LocalDate.now().getYear();
         if (clientOS == 1) {
-            if (yearOfManufacture >= currentYear) {
+            if (clientDeviceYear >= currentYear) {
                 System.out.println("Установите версию приложения для Android по ссылке");
             } else {
                 System.out.println("Установите облегченную версию приложения для Android по ссылке");
             }
         } else if (clientOS == 0) {
-            if (yearOfManufacture >= currentYear) {
+            if (clientDeviceYear >= currentYear) {
                 System.out.println("Установите версию приложения для iOS по ссылке");
             } else {
                 System.out.println("Установите облегченную версию приложения для iOS по ссылке");
@@ -54,15 +58,16 @@ public class Main {
         }
     }
 
-    public static int calculateDeliveryDaysCount(int distance) {
-        if (distance < 20) {
+    // Вычисляем кол-во дней, необходимых для доставки
+    public static int calculateDeliveryDaysCount(int deliveryDistance) {
+        if (deliveryDistance < 20) {
             return 1;
-        } else if (distance >= 20 && distance < 60) {
+        } else if (deliveryDistance >= 20 && deliveryDistance < 60) {
             return 2;
-        } else if (distance >= 60 && distance < 100) {
+        } else if (deliveryDistance >= 60 && deliveryDistance < 100) {
             return 3;
         } else {
-            return -1;
+            throw new IllegalArgumentException("\"Свыше 100км доставка не осуществляется\"");
         }
     }
 }
